@@ -1,24 +1,26 @@
 const fs = require("fs");
-// fs is built in module
-// Sync fn...
-// ye ek test.txt name ki file create kar dega jisem hello world likha hoga
-fs.writeFileSync("./test.txt", "Hello world");
+const os = require("os");
+// ye hmare cpu ka size btata h 
+// aur jitna cpu size hoga utne hi threads le skte h hm
+console.log(os.cpus().length);
 
-//Async fn... ek call back fn bhi pass kar dete h taki koi error aye to wo handle kar le
-fs.writeFile("./test.txt", "hello world", (err) => {})
-// utf-8 is encoding kyuki hmare pas koi bhi file ho skti h binary wagerah to use convert karne ke liye
-const result = fs.readFileSync("./contacts.txt", "utf-8")
+// Blocking or Sync...
+console.log("1");
+const result = fs.readFileSync("contacts.txt", "utf-8");
 console.log(result);
+console.log("2");
 
-fs.readFile("./contacts.txt", "utf-8", (err, result) => {
-   if(err) {
-        console.log("Error", err);
-    }
-    else{
-        console.log(result);
-    }
+// so in this case sabse pehle 1 print hoga
+// then result print hoga
+// then 2 kyuki ye bloack kar leta h func ko aur jab tak run nhi ho jata aage nhi badhega
+
+// Non- Blocking or Async
+
+console.log("1");
+fs.readFile("contacts.txt", "utf-8", (err, result) => {
+    console.log(result);
 });
+console.log("2");
 
-fs.appendFileSync("./test.txt", `jhguyguygu\n`);
-// file ke sath hm log kuich bhi kar skte h like
-// dir bna skte h delete kar skte h read write kar skte h kuch bhi
+// isme print hoga 1 2 then result
+// ye 
