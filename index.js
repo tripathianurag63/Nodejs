@@ -11,7 +11,7 @@ const myServer = http.createServer((req, res) => {
     fs.appendFile("log.txt", log, (err, data) => {
         switch (myUrl.pathname) {
             case "/":
-                res.end("Homepage");
+                if(req.method === "GET") res.end("HomePage");
                 break;
             case "/about":
                 const username = myUrl.query.myname;
@@ -20,6 +20,14 @@ const myServer = http.createServer((req, res) => {
             case "/search":
                 const search = myUrl.query.search_query;
                 res.end("here are your results for " + search);
+            case "/signup":
+                //get mtlb ye ek sign up form h hme data dena hoga
+                if(req.method === "GET") res.end("This is a signup from");
+                else if (req.method === "POST") {
+                    // agar post h mtlb database se data le kar ayega server
+                    // DB query
+                    res.end("Success");
+                }
             default:
                 res.end("404 Not Found");
         }
